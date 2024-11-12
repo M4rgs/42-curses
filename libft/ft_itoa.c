@@ -12,7 +12,7 @@
 
 #include "libft.h"
 
-long int	dgts(long int n)
+static long int	dgts(long int n)
 {
 	int	count;
 

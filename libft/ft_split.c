@@ -12,81 +12,89 @@
 
 #include "libft.h"
 
-static int	wordss(const char *s, char c)
+static size_t	count_words(const char *s, char c)
 {
-	int	word;
-	int	i;
-	int	f;
-
-	i = 0;
-	f = 0;
-	word = 0;
-	while (s[i] > 0)
-	{
-		if (s[i] != c)
-		{
-			if (f == 0 && s[i] != c)
-				word++;
-			f = 1;
-		}
-		else
-			f = 0;
-		i++;
-	}
-	return (word);
-}
-
-static char	*ft_add(const char *str, int last, int start)
-{
-	int		i;
-	char	*word;
-
-	i = 0;
-	word = malloc((last - start + 1) * sizeof(char));
-	if (word == NULL)
-		return (NULL);
-	while (start < last)
-	{
-		word[i] = str[start];
-		i++;
-		start++;
-	}
-	word[i] = '\0';
-	return (word);
-}
-
-static void	dfn(size_t *a, int *b, int *c)
-{
-	*a = 0;
-	*b = 0;
-	*c = -1;
-}
-
-char	**ft_split(char const *s, char c)
-{
-	char	**p;
 	size_t	i;
-	int		j;
-	int		first_index;
+	size_t	result;
+
+	i = 0;
+	result = 0;
+	while (s[i] != '\0')
+	{
+		while (s[i] && s[i] == c)
+			i++;
+		if (s[i] != '\0')
+			result++;
+		while (s[i] && s[i] != c)
+			i++;
+	}
+	return (result);
+}
+
+static char	*allo_words(const char *s, char c)
+{
+	size_t	len;
+	char	*result;
 
 	if (!s)
 		return (NULL);
-	p = malloc((wordss(s, c) + 1) * sizeof(char *));
-	if (p == NULL)
-		return (NULL);
-	dfn(&i, &j, &first_index);
-	while (i <= ft_strlen(s))
+	len = 0;
+	while (s[len] && s[len] != c)
 	{
-		if (s[i] != c && first_index < 0)
-			first_index = i;
-		else if ((s[i] == c || ft_strlen(s) == i) && first_index >= 0)
-		{
-			p[j] = ft_add(s, i, first_index);
-			j++;
-			first_index = -1;
-		}
+		len++;
+	}
+	result = (char *)malloc(sizeof(char) * (len +1));
+	if (!result)
+		return (NULL);
+	len = 0;
+	while (s[len] && s[len] != c)
+	{
+		result[len] = s[len];
+		len++;
+	}
+	result[len] = '\0';
+	return (result);
+}
+
+static char	**ft_free(char **words, size_t index)
+{
+	size_t	i;
+
+	i = 0;
+	while (index > i)
+	{
+		free(words[i]);
 		i++;
 	}
-	p[j] = NULL;
-	return (p);
+	free(words);
+	return (NULL);
+}
+
+char	**ft_split(const char *s, char c)
+{
+	char	**result;
+	size_t	i;
+	size_t	j;
+	size_t	count;
+
+	if (!s)
+		return (NULL);
+	count = count_words(s, c);
+	result = (char **)malloc(sizeof(char *) * (count + 1));
+	if (!result)
+		return (NULL);
+	i = 0;
+	j = -1;
+	while (++j < count)
+	{
+		while (s[i] && s[i] == c)
+			i++;
+		result[j] = allo_words(&s[i], c);
+		if (!result[j])
+			return (ft_free(result, j));
+		while (s[i] && s[i] != c)
+			i++;
+	}
+	result[count] = NULL;
+	return (result);
 }
