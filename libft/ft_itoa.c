@@ -49,12 +49,13 @@ char	*ft_itoa(int n)
 		p[0] = '-';
 		num = -num;
 	}
-	while (counts--)
+	while (counts > 0 && num != 0)
 	{
-		if (num == 0 && p[0] == '-')
-			break ;
-		p[counts] = num % 10 + '0';
+		p[counts - 1] = num % 10 + '0';
 		num = num / 10;
+		counts--;
 	}
+	if (n == 0)
+		p[0] = '0';
 	return (p);
 }
