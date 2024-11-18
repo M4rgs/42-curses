@@ -11,14 +11,7 @@
 /* ************************************************************************** */
 
 #include "libft.h"
-
-static int	ft_rtrn(int signe)
-{
-	if (signe < 0)
-		return (0);
-	return (-1);
-}
-
+#include <stdio.h>
 int	ft_atoi(const char *str)
 {
 	size_t	i;
@@ -38,10 +31,11 @@ int	ft_atoi(const char *str)
 	}
 	while (str[i] >= '0' && str[i] <= '9')
 	{
-		if ((rzlt > MAX_LL / 10)
-			|| (rzlt == MAX_LL / 10 && (str[i] - 48) > MAX_LL % 10))
-			return (ft_rtrn(odd));
 		rzlt = rzlt * 10 + (str[i] - 48);
+		if (rzlt > 9223372036854775807 && odd == -1)
+			return (0);
+		if (rzlt > 9223372036854775807 && odd == 1)
+			return (-1);
 		i++;
 	}
 	return (rzlt * odd);

@@ -16,23 +16,18 @@ char	*ft_strjoin(char const *s1, char const *s2)
 {
 	char	*p;
 	size_t	lent;
-	size_t	i;
 
 	if (!s1 && !s2)
 		return (NULL);
-	if (!s2)
-		return (p = ft_strdup(s1));
 	if (!s1)
-		return (p = ft_strdup(s2));
-	lent = ft_strlen(s1) + ft_strlen (s2);
-	p = malloc(lent + 1);
+		return (ft_strdup(s2));
+	else if (!s2)
+		return (ft_strdup(s1));
+	lent = ft_strlen(s1) + ft_strlen(s2) + 1;
+	p = malloc(lent);
 	if (!p)
 		return (NULL);
-	i = 0;
-	if (s1)
-		i += ft_strlcpy(&p[i], s1, ft_strlen(s1) + 1);
-	if (s2)
-		i += ft_strlcpy(&p[i], s2, ft_strlen(s2) + 1);
-	p[i] = '\0';
+	ft_strlcpy(p, s1, lent);
+	ft_strlcat(p, s2, lent);
 	return (p);
 }
