@@ -12,13 +12,23 @@
 
 #include "libft.h"
 
+static int	mylen(const char *s)
+{
+	int	i;
+
+	i = 0;
+	while (s[i])
+	{
+		i++;
+	}
+	return (i);
+}
+
 char	*ft_strrchr(const char *s, int c)
 {
 	int	i;
 
-	i = ft_strlen(s);
-	if (!s)
-		return (NULL);
+	i = mylen(s);
 	while (i >= 0)
 	{
 		if (s[i] == (unsigned char)c)
