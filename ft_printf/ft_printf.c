@@ -51,16 +51,15 @@ int	ft_printf(const char *format, ...)
 		return (-1);
 	while (format[i] != '\0')
 	{
-		if (format[i] == '%' && format[i + 1])
+		if (format[i] == '%')
 		{
+			if (format[i + 1] == '\0')
+				break ;
 			rtr += printf_format(format[++i], args);
 			i++;
 		}
 		else
-		{
-			rtr += ft_putchar(format[i]);
-			i++;
-		}
+			rtr += ft_putchar(format[i++]);
 	}
 	va_end(args);
 	return (rtr);
