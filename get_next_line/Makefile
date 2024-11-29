@@ -16,7 +16,7 @@ ${NAME} : ${OBJCS}
 	${AR} ${NAME} ${OBJCS} 
 
 %.o : %.c get_next_line.h
-	${CC} ${CFLAGS} -c $< -o $@
+	${CC} ${CFLAGS} -D BUFFER_SIZE=42 -c $< -o $@
 
 clean : 
 	rm -rf ${OBJCS}

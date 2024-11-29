@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <libc.h>
 
 char	*ft_free(char *buffer, char *buf)
 {
@@ -105,8 +104,6 @@ char	*get_next_line(int fd)
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	buffer = read_file(fd, buffer);
-	if (!buffer)
-		return (NULL);
 	line = ft_line(buffer);
 	buffer = ft_next(buffer);
 	return (line);
