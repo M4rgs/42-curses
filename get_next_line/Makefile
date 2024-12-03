@@ -1,4 +1,4 @@
-NAME = libget_next_line.a
+NAME = libgnl.a
 
 CC = cc
 
@@ -6,7 +6,7 @@ CFLAGS = -Wextra -Wall -Werror
 
 AR = ar -rc
 
-SRC = get_next_line_utils.c get_next_line.c
+SRC = get_next_line.c get_next_line_utils.c
 
 OBJCS = ${SRC:.c=.o}
 
@@ -16,7 +16,7 @@ ${NAME} : ${OBJCS}
 	${AR} ${NAME} ${OBJCS} 
 
 %.o : %.c get_next_line.h
-	${CC} ${CFLAGS} -D BUFFER_SIZE=42 -c $< -o $@
+	${CC} ${CFLAGS} -c $< -o $@
 
 clean : 
 	rm -rf ${OBJCS}

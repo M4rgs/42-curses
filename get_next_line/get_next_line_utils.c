@@ -5,81 +5,79 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tamounir <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/11/28 17:24:39 by tamounir          #+#    #+#             */
-/*   Updated: 2024/11/28 17:24:40 by tamounir         ###   ########.fr       */
+/*   Created: 2024/12/03 01:48:20 by tamounir          #+#    #+#             */
+/*   Updated: 2024/12/03 01:48:22 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-void	*ft_calloc(size_t nmemb, size_t size)
+char	*ft_strchr(char *str)
 {
-	void	*p;
+	int	i;
 
-	p = malloc(nmemb * size);
-	if (p == 0)
-		return (p);
-	ft_bzero(p, nmemb * size);
-	return (p);
-}
-
-char	*ft_strchr(const char *s, int c)
-{
-	while (*s)
+	i = 0;
+	if (!str)
+		return (NULL);
+	while (str[i])
 	{
-		if (*s == (char)c)
-			return ((char *)s);
-		s++;
+		if (str[i] == '\n')
+			return (&str[i]);
+		i++;
 	}
-	if (*s == (char)c)
-		return ((char *)s);
 	return (NULL);
 }
 
-size_t	ft_strlen(const char *str)
+size_t	ft_strlen(char *str)
 {
 	size_t	i;
 
 	i = 0;
-	while (str[i] != '\0')
-	{
+	while (str[i])
 		i++;
-	}
 	return (i);
 }
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *buffer, char *buff)
 {
-	char	*newstring;
-	int		s1len;
-	int		s2len;
 	int		i;
+	int		j;
+	char	*temp;
 
-	s1len = ft_strlen(s1);
-	s2len = ft_strlen(s2);
-	newstring = calloc(s1len + s2len +1, sizeof(char));
-	if (!newstring)
+	if (!buffer && !buff)
+		return (NULL);
+	if (!buffer)
+		buffer = ft_calloc(1, sizeof(char));
+	temp = malloc(ft_strlen(buffer) + ft_strlen(buff) + 1);
+	if (!temp)
 		return (NULL);
 	i = -1;
-	while (s1[++i] != '\0')
-		newstring[i] = s1[i];
-	i = -1;
-	while (s2[++i] != '\0')
-		newstring[s1len + i] = s2[i];
-	newstring[s1len + i] = '\0';
-	return (newstring);
+	while (buffer[++i])
+		temp[i] = buffer[i];
+	j = -1;
+	while (buff[++j])
+		temp[i++] = buff[j];
+	temp[i] = '\0';
+	free(buffer);
+	free(buff);
+	return (temp);
 }
 
-void	ft_bzero(void *s, size_t n)
+void	*ft_calloc(size_t count, size_t size)
 {
-	char	*char_ptr;
 	size_t	i;
+	char	*ptr;
 
-	char_ptr = (char *)s;
 	i = 0;
-	while (i < n)
+	if (count && size > SIZE_MAX / count)
+		return (NULL);
+	ptr = malloc(count * size);
+	if (!ptr)
+		return (NULL);
+	while (i < count)
 	{
-		char_ptr[i] = '\0';
+		ptr[i] = '\0';
 		i++;
 	}
+	return (ptr);
 }
