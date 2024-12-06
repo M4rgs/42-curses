@@ -5,12 +5,22 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: tamounir <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/12/03 01:48:20 by tamounir          #+#    #+#             */
-/*   Updated: 2024/12/03 01:48:22 by tamounir         ###   ########.fr       */
+/*   Created: 2024/12/06 20:06:56 by tamounir          #+#    #+#             */
+/*   Updated: 2024/12/06 20:06:57 by tamounir         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+size_t	ft_strlen(char *s)
+{
+	size_t	i;
+
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
+}
 
 char	*ft_strchr(char *str)
 {
@@ -28,39 +38,31 @@ char	*ft_strchr(char *str)
 	return (NULL);
 }
 
-size_t	ft_strlen(char *str)
-{
-	size_t	i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
-}
-
-char	*ft_strjoin(char *buffer, char *buff)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	int		i;
 	int		j;
-	char	*temp;
+	char	*p;
 
-	if (!buffer && !buff)
+	if (!s1 && !s2)
 		return (NULL);
-	if (!buffer)
-		buffer = ft_calloc(1, sizeof(char));
-	temp = malloc(ft_strlen(buffer) + ft_strlen(buff) + 1);
-	if (!temp)
+	if (!s2)
+		return (NULL);
+	if (!s1)
+		s1 = ft_calloc(1, 1);
+	p = malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
+	if (!p)
 		return (NULL);
 	i = -1;
-	while (buffer[++i])
-		temp[i] = buffer[i];
+	while (s1[++i])
+		p[i] = s1[i];
 	j = -1;
-	while (buff[++j])
-		temp[i++] = buff[j];
-	temp[i] = '\0';
-	free(buffer);
-	free(buff);
-	return (temp);
+	while (s2[++j])
+		p[i++] = s2[j];
+	p[i] = '\0';
+	free(s1);
+	free(s2);
+	return (p);
 }
 
 void	*ft_calloc(size_t count, size_t size)
@@ -73,7 +75,11 @@ void	*ft_calloc(size_t count, size_t size)
 		return (NULL);
 	ptr = malloc(count * size);
 	if (!ptr)
+	{
+		free(ptr);
+		ptr = NULL;
 		return (NULL);
+	}
 	while (i < count)
 	{
 		ptr[i] = '\0';

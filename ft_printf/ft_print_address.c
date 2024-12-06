@@ -25,13 +25,13 @@ static int	hex_len(unsigned long n)
 	return (len);
 }
 
-static void	ft_putnbr_hex_lo(unsigned long n)
+static void	ft_putnbr_hex(unsigned long n)
 {
 	char	*hex_digits;
 
 	hex_digits = "0123456789abcdef";
 	if (n >= 16)
-		ft_putnbr_hex_lo(n / 16);
+		ft_putnbr_hex(n / 16);
 	ft_putchar(hex_digits[n % 16]);
 }
 
@@ -43,6 +43,6 @@ int	ft_print_address(unsigned long n)
 	if (n == 0)
 		lenthg++;
 	lenthg += ft_putstr("0x");
-	ft_putnbr_hex_lo(n);
+	ft_putnbr_hex(n);
 	return (lenthg);
 }
