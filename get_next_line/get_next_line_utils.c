@@ -22,20 +22,20 @@ size_t	ft_strlen(char *s)
 	return (i);
 }
 
-char	*ft_strchr(char *str)
+int	nchecker(char *str)
 {
 	int	i;
 
 	i = 0;
 	if (!str)
-		return (NULL);
+		return (0);
 	while (str[i])
 	{
 		if (str[i] == '\n')
-			return (&str[i]);
+			return (1);
 		i++;
 	}
-	return (NULL);
+	return (0);
 }
 
 char	*ft_strjoin(char *s1, char *s2)
@@ -75,11 +75,7 @@ void	*ft_calloc(size_t count, size_t size)
 		return (NULL);
 	ptr = malloc(count * size);
 	if (!ptr)
-	{
-		free(ptr);
-		ptr = NULL;
 		return (NULL);
-	}
 	while (i < count)
 	{
 		ptr[i] = '\0';
