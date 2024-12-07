@@ -18,11 +18,9 @@ char	*reading(char *buffer, int fd)
 	int		readed;
 
 	readed = 1;
-	while (!ft_strchr(buffer) && readed != 0)
+	while (readed != 0)
 	{
 		buff = malloc(BUFFER_SIZE + 1);
-		if (!buff)
-			return (NULL);
 		readed = read(fd, buff, BUFFER_SIZE);
 		if ((!buffer && readed == 0) || readed == -1)
 		{
@@ -32,6 +30,8 @@ char	*reading(char *buffer, int fd)
 		}
 		buff[readed] = '\0';
 		buffer = ft_strjoin(buffer, buff);
+		if (nchecker(buffer))
+			break ;
 	}
 	return (buffer);
 }
